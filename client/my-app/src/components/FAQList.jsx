@@ -1,16 +1,33 @@
-import { useQuery } from 'react-query';
+
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const fetchFAQs = async () => {
-  const { data } = await axios.get('/api/faqs');
-  return data;
+  try {
+    const response = await axios.get('/api/faqs');
+    console.log('API Response:', response);
+    console.log('Response Data:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching FAQs:', error);
+    throw error;
+  }
 };
 
 export default function FAQList() {
-  const { data: faqs, isLoading } = useQuery('faqs', fetchFAQs);
+  const { data: faqs, isLoading, error } = useQuery({
+    queryKey: ['faqs'],
+    queryFn: fetchFAQs
+  });
+
+  console.log('FAQs in component:', faqs);
 
   if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading FAQs: {error.message}</div>;
+  
+  // Ensure faqs is an array and has items
+  const faqList = Array.isArray(faqs) ? faqs : [];
 
   return (
     <div className="space-y-4">
@@ -22,22 +39,25 @@ export default function FAQList() {
       </div>
       
       <div className="space-y-3">
-        {faqs.map(faq => (
-          <div key={faq.id} className="border p-4 rounded-lg shadow-sm">
-            <h3 className="font-semibold text-lg">{faq.question}</h3>
-            <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
-            <div className="mt-2 flex space-x-2">
-              <Link 
-                to={`/edit/${faq.id}`}
-                className="text-sm bg-gray-100 px-2 py-1 rounded"
-              >
-                Edit
-              </Link>
+        {faqList.length === 0 ? (
+          <div className="text-gray-500">No FAQs available. API response: {JSON.stringify(faqs)}</div>
+        ) : (
+          faqList.map(faq => (
+            <div key={faq.id} className="border p-4 rounded-lg shadow-sm">
+              <h3 className="font-semibold text-lg">{faq.question}</h3>
+              <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
+              <div className="mt-2 flex space-x-2">
+                <Link 
+                  to={`/edit/${faq.id}`}
+                  className="text-sm bg-gray-100 px-2 py-1 rounded"
+                >
+                  Edit
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
 }
-  

@@ -1,21 +1,18 @@
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import PropTypes from 'prop-types';
 
-export default function RichTextEditor({ value, onChange }) {
+function RichTextEditor({ value, onChange }) {
   return (
-    <CKEditor
-      editor={ClassicEditor}
-      data={value}
-      onChange={(_, editor) => onChange(editor.getData())}
-      config={{
-        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
-      }}
+    <textarea
+      className="w-full p-2 border rounded min-h-[150px]"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
     />
   );
 }
-// Declare PropTypes for the component
+
 RichTextEditor.propTypes = {
-    value: PropTypes.string.isRequired, // this prop should be a string
-    onChange: PropTypes.func.isRequired, // onChange should be a function
-    };
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+export default RichTextEditor;
