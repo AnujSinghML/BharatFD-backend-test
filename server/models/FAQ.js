@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+// server/models/FAQ.js
+import mongoose from 'mongoose';
 
 const faqSchema = new mongoose.Schema({
   question: {
@@ -14,7 +15,7 @@ const faqSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-// Translation method
+// Instance method: returns translated version dynamically (fallback to 'en')
 faqSchema.methods.getTranslated = function (lang = 'en') {
   return {
     question: this.question[lang] || this.question.en,
@@ -22,4 +23,5 @@ faqSchema.methods.getTranslated = function (lang = 'en') {
   };
 };
 
-module.exports = mongoose.model('FAQ', faqSchema);
+const FAQ = mongoose.model('FAQ', faqSchema);
+export default FAQ;

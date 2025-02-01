@@ -1,23 +1,23 @@
-import translate from '@vitalets/google-translate-api';
+import { translate } from '@vitalets/google-translate-api';
 
-const SUPPORTED_LANGS = ['en', 'hi', 'bn'];
-
-export const translateFAQ = async (faq, targetLang) => {
-  if (!SUPPORTED_LANGS.includes(targetLang)) return faq;
-
+// translateFAQ accepts an FAQ document and an array of target languages (excluding 'en')
+export const translateFAQ = async (faq, targetLangs = []) => {
   try {
-    const [questionRes, answerRes] = await Promise.all([
-      translate(faq.question.en, { to: targetLang }),
-      translate(faq.answer.en, { to: targetLang }),
-    ]);
+    const translations = { question: {}, answer: {} };
 
-    return {
-      question: { ...faq.question, [targetLang]: questionRes.text },
-      answer: { ...faq.answer, [targetLang]: answerRes.text },
-      createdAt: faq.createdAt,
-    };
+    for (const lang of targetLangs) {
+      // Translate the English question and answer concurrently
+      const [qRes, aRes] = await Promise.all([
+        translate(faq.question.en, { to: lang }),
+        translate(faq.answer.en, { to: lang }),
+      ]);
+      translations.question[lang] = qRes.text;
+      translations.answer[lang] = aRes.text;
+    }
+    return translations;
   } catch (err) {
     console.error('Translation failed:', err);
-    return faq; // Fallback to English
+    // On failure, return an empty translation object (caller will merge with the original English)
+    return { question: {}, answer: {} };
   }
 };
