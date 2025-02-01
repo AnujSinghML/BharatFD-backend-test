@@ -1,0 +1,14 @@
+### Get all FAQs
+GET http://localhost:5000/api/faqs
+
+### Create FAQ
+POST http://localhost:5000/api/faqs
+Content-Type: application/json
+
+{
+  "question": "How to reset password?",
+  "answer": "<p>Visit settings page and click 'Reset Password'</p>"
+}
+
+### Get Hindi FAQs
+GET http://localhost:5000/api/faqs?lang=hi
