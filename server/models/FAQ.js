@@ -1,4 +1,7 @@
+// 
+
 // server/models/FAQ.js
+
 import mongoose from 'mongoose';
 
 const faqSchema = new mongoose.Schema({
@@ -24,4 +27,5 @@ faqSchema.methods.getTranslated = function (lang = 'en') {
 };
 
 const FAQ = mongoose.model('FAQ', faqSchema);
+
 export default FAQ;
