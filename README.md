@@ -110,10 +110,9 @@ curl -X GET http://localhost:5000/api/faqs
 curl -X GET "http://localhost:5000/api/faqs?lang=hi"
 
 #### 4. Retrieve FAQs in Bengali
-
-## System Architecture
 curl -X GET "http://localhost:5000/api/faqs?lang=bn"
 
+## System Architecture
          +---------------------+
          |  React Admin Panel  |
          |  (client/my-app)    |
