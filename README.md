@@ -113,29 +113,6 @@ curl -X GET "http://localhost:5000/api/faqs?lang=hi"
 curl -X GET "http://localhost:5000/api/faqs?lang=bn"
 
 ## System Architecture
-         +---------------------+
-         |  React Admin Panel  |
-         |  (client/my-app)    |
-         +---------------------+
-                    │
-                    ▼
-         +---------------------+
-         |     Express API     |
-         |  (/api/faqs endpoints)  |
-         +---------------------+
-                    │
-       +------------+------------+
-       |                         |
-   +-------+                +---------+
-   | Redis |                | MongoDB |
-   | Cache |                | Database|
-   +-------+                +---------+
-                    │
-                    ▼
-    +-----------------------------+
-    | Translation Service         |
-    | (Google Translate API)      |
-    +-----------------------------+
 
 - **Translation Service:** Automatically translates English FAQs to Hindi and Bengali.
 - **Caching:** Redis caches generated translations for optimal performance.
