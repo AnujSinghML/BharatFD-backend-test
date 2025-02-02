@@ -142,4 +142,4 @@ Use Docker Compose to quickly spin up the entire backend stack (Express, MongoDB
 
 ---
 
-This README provides step-by-step instructions to run the project from scratch, explains the API endpoints and how to interact with them using curl, and gives an overview of the system architecture. Feel free to modify this documentation to better suit your project details.
+This README provides step-by-step instructions to run the project from scratch, explains the API endpoints and how to interact with them using curl, and gives an overview of the system architecture. 
