@@ -89,6 +89,7 @@ Your admin panel will be available at the port configured by Vite (commonly [htt
 #### 1. Add a New FAQ
 
 This request sends a new FAQ in English. The backend processes this and automatically generates translations.
+
 curl -X POST http://localhost:5000/api/faqs
 -H "Content-Type: application/json"
 -d '{
