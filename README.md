@@ -98,7 +98,8 @@ curl -X POST http://localhost:5000/api/faqs
 }'
 
 Here is an example of how it worked and what to expect:
-![image-showing-how-api-works](output\API-using-curl.png)
+![image-showing-how-api-works](output/API-using-curl.png)
+
 
 
 #### 2. Retrieve FAQs in English
